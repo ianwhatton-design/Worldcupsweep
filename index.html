@@ -7,186 +7,191 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #FFD700;
-    --green: #00C853;
-    --red: #E53935;
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1c2535;
-    --text: #f0f4ff;
-    --muted: #6b7a99;
-    --border: rgba(255,255,255,0.07);
+    --gold: #FFD700; --green: #00C853; --bg: #0a0e1a;
+    --surface: #111827; --surface2: #1c2535; --text: #f0f4ff;
+    --muted: #6b7a99; --border: rgba(255,255,255,0.07);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
   body::before {
-    content: ''; position: fixed; inset: 0;
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
     background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,215,0,0.12) 0%, transparent 60%),
                 radial-gradient(ellipse 40% 40% at 85% 90%, rgba(0,200,83,0.08) 0%, transparent 50%);
-    pointer-events: none; z-index: 0;
   }
-  .page { position: relative; z-index: 1; }
+  .page { position:relative; z-index:1; }
 
-  header { text-align: center; padding: 48px 24px 32px; border-bottom: 1px solid var(--border); }
-  .trophy { font-size: 56px; line-height: 1; margin-bottom: 12px; filter: drop-shadow(0 0 20px rgba(255,215,0,0.5)); }
+  /* HEADER */
+  header { text-align:center; padding:48px 24px 32px; border-bottom:1px solid var(--border); }
+  .trophy { font-size:56px; line-height:1; margin-bottom:12px; filter:drop-shadow(0 0 20px rgba(255,215,0,0.5)); }
   header h1 {
-    font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 8vw, 5rem); letter-spacing: 0.06em; line-height: 1;
-    background: linear-gradient(135deg, #FFD700 0%, #fff 50%, #FFD700 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(2.4rem,8vw,5rem); letter-spacing:0.06em; line-height:1;
+    background:linear-gradient(135deg,#FFD700 0%,#fff 50%,#FFD700 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   }
-  header p { color: var(--muted); font-size: 0.95rem; margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+  header p { color:var(--muted); font-size:0.95rem; margin-top:8px; letter-spacing:0.1em; text-transform:uppercase; }
 
-  .tabs { display: flex; justify-content: center; gap: 8px; padding: 24px 16px 0; flex-wrap: wrap; }
+  /* CORNER HOST BTN */
+  .host-corner-btn {
+    position:fixed; top:14px; right:16px; z-index:100;
+    background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    padding:7px 14px; border-radius:20px; font-size:0.72rem; font-weight:600;
+    letter-spacing:0.06em; cursor:pointer; transition:all 0.2s; text-transform:uppercase;
+  }
+  .host-corner-btn:hover, .host-corner-btn.active { border-color:var(--gold); color:var(--gold); background:rgba(255,215,0,0.08); }
+
+  /* TABS */
+  .tabs { display:flex; justify-content:center; gap:8px; padding:24px 16px 0; }
   .tab-btn {
-    background: var(--surface); border: 1px solid var(--border); color: var(--muted);
-    padding: 10px 28px; border-radius: 40px; font-size: 0.875rem; font-weight: 600;
-    letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+    background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    padding:10px 28px; border-radius:40px; font-size:0.875rem; font-weight:600;
+    letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; text-transform:uppercase;
   }
-  .tab-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .tab-btn.active { background: var(--gold); color: #0a0e1a; border-color: var(--gold); }
+  .tab-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .tab-btn.active { background:var(--gold); color:#0a0e1a; border-color:var(--gold); }
 
-  .panel { display: none; padding: 40px 16px 60px; max-width: 720px; margin: 0 auto; }
-  .panel.active { display: block; }
+  /* PANELS */
+  .panel { display:none; padding:40px 16px 60px; max-width:820px; margin:0 auto; }
+  .panel.active { display:block; }
 
-  /* SETUP CARD */
-  .setup-card {
-    background: var(--surface); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 32px;
+  /* ENTER CARD */
+  .enter-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:40px 32px; text-align:center; }
+  .enter-card h2 { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:8px; }
+  .enter-card > p { color:var(--muted); font-size:0.9rem; margin-bottom:28px; }
+  .input-wrap input {
+    width:100%; padding:16px 20px; background:var(--surface2); border:2px solid var(--border);
+    border-radius:12px; color:var(--text); font-size:1.1rem; font-family:'Inter',sans-serif;
+    outline:none; transition:border-color 0.2s; text-align:center;
   }
-  .setup-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 8px; }
-  .setup-card > p { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; line-height: 1.6; }
-  .setup-step { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
-  .step-num { width: 28px; height: 28px; background: var(--gold); color: #0a0e1a; border-radius: 50%; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-  .step-text { font-size: 0.88rem; color: var(--text); line-height: 1.6; }
-  .step-text a { color: var(--gold); }
-  .step-text code { background: var(--surface2); padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 0.85em; color: #7dd3fc; word-break: break-all; }
-  .note-box { margin-top: 24px; padding: 16px 20px; background: rgba(55,189,238,0.08); border: 1px solid rgba(55,189,238,0.25); border-radius: 10px; font-size: 0.84rem; color: #7dd3fc; line-height: 1.6; }
+  .input-wrap input:focus { border-color:var(--gold); }
+  .input-wrap input::placeholder { color:var(--muted); }
+  .input-wrap { margin-bottom:16px; }
+  .btn-enter {
+    width:100%; padding:18px; background:linear-gradient(135deg,#FFD700,#FFA000); border:none;
+    border-radius:12px; font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.12em;
+    color:#0a0e1a; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 24px rgba(255,215,0,0.3);
+  }
+  .btn-enter:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(255,215,0,0.45); }
+  .btn-enter:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+  .slots-left { margin-top:20px; font-size:0.8rem; color:var(--muted); }
+  .slots-left span { color:var(--gold); font-weight:700; }
+  .error-msg { color:#EF9A9A; font-size:0.83rem; margin-top:8px; min-height:20px; text-align:center; }
 
-  /* ENTER */
-  .enter-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 32px; text-align: center; }
-  .enter-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 8px; }
-  .enter-card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
-  .input-wrap { position: relative; margin-bottom: 16px; }
-  .input-wrap input { width: 100%; padding: 16px 20px; background: var(--surface2); border: 2px solid var(--border); border-radius: 12px; color: var(--text); font-size: 1.1rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; text-align: center; }
-  .input-wrap input:focus { border-color: var(--gold); }
-  .input-wrap input::placeholder { color: var(--muted); }
-  .btn-enter { width: 100%; padding: 18px; background: linear-gradient(135deg, #FFD700, #FFA000); border: none; border-radius: 12px; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.12em; color: #0a0e1a; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 24px rgba(255,215,0,0.3); }
-  .btn-enter:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,215,0,0.45); }
-  .btn-enter:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .slots-left { margin-top: 20px; font-size: 0.8rem; color: var(--muted); }
-  .slots-left span { color: var(--gold); font-weight: 700; }
-
-  .reveal-section { margin-top: 32px; }
-  .reveal-greeting { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; margin-bottom: 8px; }
-  .reveal-greeting span { color: var(--gold); }
-  .reveal-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
-  .team-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .team-card { background: var(--surface2); border: 2px solid var(--border); border-radius: 16px; padding: 28px 16px; text-align: center; position: relative; overflow: hidden; }
-  .team-card.revealed { border-color: var(--gold); animation: cardPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
-  @keyframes cardPop { 0% { transform: scale(0.8) rotateY(90deg); opacity: 0; } 100% { transform: scale(1) rotateY(0); opacity: 1; } }
-  .team-card .flag { font-size: 3.5rem; line-height: 1; margin-bottom: 12px; }
-  .team-card .team-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.06em; line-height: 1.2; }
-  .team-card .group-badge { display: inline-block; margin-top: 8px; padding: 3px 10px; background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
-  .team-card.hidden-card .flag, .team-card.hidden-card .team-name, .team-card.hidden-card .group-badge { visibility: hidden; }
-  .scratch-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; background: linear-gradient(135deg, var(--surface2), #0f1929); border-radius: 14px; cursor: pointer; transition: opacity 0.4s; gap: 8px; }
-  .scratch-btn .scratch-icon { font-size: 2.5rem; animation: pulse 1.5s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-  .scratch-btn .scratch-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .scratch-btn.gone { opacity: 0; pointer-events: none; }
-  .share-note { margin-top: 24px; padding: 14px 18px; background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.25); border-radius: 10px; font-size: 0.82rem; color: #80E0A0; line-height: 1.5; }
+  /* REVEAL */
+  .reveal-section { margin-top:32px; }
+  .reveal-greeting { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.08em; margin-bottom:8px; }
+  .reveal-greeting span { color:var(--gold); }
+  .reveal-sub { color:var(--muted); font-size:0.85rem; margin-bottom:28px; }
+  .team-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .team-card { background:var(--surface2); border:2px solid var(--border); border-radius:16px; padding:28px 16px; text-align:center; position:relative; overflow:hidden; }
+  .team-card.revealed { border-color:var(--gold); animation:cardPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes cardPop { 0%{transform:scale(0.8) rotateY(90deg);opacity:0} 100%{transform:scale(1) rotateY(0);opacity:1} }
+  .team-card .flag { font-size:3.5rem; line-height:1; margin-bottom:12px; }
+  .team-card .team-name { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.06em; line-height:1.2; }
+  .team-card .group-badge { display:inline-block; margin-top:8px; padding:3px 10px; background:rgba(255,215,0,0.15); border:1px solid rgba(255,215,0,0.3); border-radius:20px; font-size:0.7rem; color:var(--gold); letter-spacing:0.08em; text-transform:uppercase; }
+  .team-card.hidden-card .flag,.team-card.hidden-card .team-name,.team-card.hidden-card .group-badge { visibility:hidden; }
+  .scratch-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; background:linear-gradient(135deg,var(--surface2),#0f1929); border-radius:14px; cursor:pointer; transition:opacity 0.4s; gap:8px; }
+  .scratch-btn .scratch-icon { font-size:2.5rem; animation:pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+  .scratch-btn .scratch-label { font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+  .scratch-btn.gone { opacity:0; pointer-events:none; }
+  .share-note { margin-top:24px; padding:14px 18px; background:rgba(0,200,83,0.1); border:1px solid rgba(0,200,83,0.25); border-radius:10px; font-size:0.82rem; color:#80E0A0; line-height:1.5; }
+  .loading { text-align:center; padding:60px; color:var(--muted); font-size:0.9rem; }
 
   /* HOST */
-  .host-login { text-align: center; }
-  .host-login h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 8px; }
-  .host-login p { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
-  .host-dashboard h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 4px; }
-  .host-actions { display: flex; gap: 10px; margin: 8px 0 24px; flex-wrap: wrap; }
-  .stat-chip { padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; }
-  .stat-chip.green { background: rgba(0,200,83,0.15); color: #00C853; border: 1px solid rgba(0,200,83,0.3); }
-  .stat-chip.gold { background: rgba(255,215,0,0.12); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
-  .stat-chip.red { background: rgba(229,57,53,0.12); color: #EF9A9A; border: 1px solid rgba(229,57,53,0.25); }
-  .btn-action { padding: 10px 20px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; cursor: pointer; transition: all 0.2s; text-transform: uppercase; border: 1px solid; }
-  .btn-action.blue { background: rgba(55,189,238,0.12); border-color: rgba(55,189,238,0.4); color: #37BDEE; }
-  .btn-action.blue:hover { background: rgba(55,189,238,0.22); }
-  .btn-action.green-a { background: rgba(0,200,83,0.1); border-color: rgba(0,200,83,0.3); color: #00C853; }
-  .btn-action.green-a:hover { background: rgba(0,200,83,0.2); }
-  .entries-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
-  .entries-table th { text-align: left; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 0 14px 6px; }
-  .entry-row td { background: var(--surface); padding: 14px; font-size: 0.9rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .entry-row td:first-child { border-left: 1px solid var(--border); border-radius: 10px 0 0 10px; font-weight: 600; white-space: nowrap; }
-  .entry-row td:last-child { border-right: 1px solid var(--border); border-radius: 0 10px 10px 0; }
-  .team-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--surface2); border-radius: 20px; font-size: 0.82rem; margin: 2px; }
-  .unassigned-section { margin-top: 32px; }
-  .unassigned-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 12px; }
-  .team-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn-reset { margin-top: 28px; padding: 10px 24px; background: transparent; border: 1px solid rgba(229,57,53,0.4); border-radius: 8px; color: #EF9A9A; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; cursor: pointer; text-transform: uppercase; }
-  .btn-reset:hover { background: rgba(229,57,53,0.1); }
-  .warn-box { padding: 14px 18px; background: rgba(229,57,53,0.08); border: 1px solid rgba(229,57,53,0.25); border-radius: 10px; font-size: 0.83rem; color: #EF9A9A; line-height: 1.6; margin-bottom: 20px; }
-  .warn-box strong { color: #fff; }
+  .host-login { text-align:center; max-width:400px; margin:0 auto; }
+  .host-login h2 { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--gold); letter-spacing:0.08em; margin-bottom:8px; }
+  .host-login p { color:var(--muted); font-size:0.9rem; margin-bottom:24px; }
+  .divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
+  .host-dashboard h2 { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--gold); letter-spacing:0.08em; margin-bottom:4px; }
+  .host-actions { display:flex; gap:10px; margin:12px 0 24px; flex-wrap:wrap; }
+  .stat-chip { padding:6px 16px; border-radius:20px; font-size:0.8rem; font-weight:600; letter-spacing:0.06em; }
+  .stat-chip.green { background:rgba(0,200,83,0.15); color:#00C853; border:1px solid rgba(0,200,83,0.3); }
+  .stat-chip.gold { background:rgba(255,215,0,0.12); color:var(--gold); border:1px solid rgba(255,215,0,0.3); }
+  .stat-chip.blue { background:rgba(55,189,238,0.12); color:#37BDEE; border:1px solid rgba(55,189,238,0.3); }
+  .btn-action { padding:10px 20px; border-radius:8px; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; cursor:pointer; transition:all 0.2s; text-transform:uppercase; border:1px solid; }
+  .btn-action.cyan { background:rgba(55,189,238,0.1); border-color:rgba(55,189,238,0.4); color:#37BDEE; }
+  .btn-action.cyan:hover { background:rgba(55,189,238,0.2); }
+  .btn-action.grn { background:rgba(0,200,83,0.1); border-color:rgba(0,200,83,0.3); color:#00C853; }
+  .btn-action.grn:hover { background:rgba(0,200,83,0.2); }
+  .btn-action.amber { background:rgba(255,160,0,0.1); border-color:rgba(255,160,0,0.35); color:#FFA000; }
+  .btn-action.amber:hover { background:rgba(255,160,0,0.2); }
 
-  .loading { text-align: center; padding: 60px; color: var(--muted); font-size: 0.9rem; letter-spacing: 0.06em; }
-  .error-msg { color: #EF9A9A; font-size: 0.83rem; margin-top: 8px; min-height: 20px; text-align: center; }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+  /* ── TEAMS GRID (host view) ── */
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.08em; color:var(--text); margin:32px 0 16px; border-bottom:1px solid var(--border); padding-bottom:8px; }
+  .teams-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:10px; }
+  .tg-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:14px 10px 12px; text-align:center; transition:border-color 0.2s;
+  }
+  .tg-card.assigned { border-color:var(--gold); background:rgba(255,215,0,0.04); }
+  .tg-card .tg-flag { font-size:2.2rem; line-height:1; margin-bottom:6px; }
+  .tg-card .tg-name { font-size:0.78rem; font-weight:700; color:var(--text); line-height:1.3; margin-bottom:4px; }
+  .tg-card .tg-group { font-size:0.62rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px; }
+  .tg-card .tg-owner { font-size:0.72rem; color:var(--gold); font-weight:600; min-height:16px; line-height:1.3; }
+  .tg-card.unassigned .tg-owner { color:var(--muted); font-weight:400; font-style:italic; }
 
-  /* ── PRINT ── */
+  /* SETUP ACCORDION */
+  .setup-toggle {
+    width:100%; background:rgba(255,215,0,0.06); border:1px solid rgba(255,215,0,0.2);
+    border-radius:12px; color:var(--gold); padding:14px 20px; font-size:0.88rem; font-weight:600;
+    letter-spacing:0.06em; text-align:left; cursor:pointer; margin-top:36px;
+    display:flex; align-items:center; justify-content:space-between; transition:background 0.2s;
+  }
+  .setup-toggle:hover { background:rgba(255,215,0,0.1); }
+  .setup-toggle .arrow { transition:transform 0.2s; font-size:0.75rem; }
+  .setup-toggle.open .arrow { transform:rotate(180deg); }
+  .setup-body {
+    display:none; background:var(--surface); border:1px solid rgba(255,215,0,0.2);
+    border-top:none; border-radius:0 0 12px 12px; padding:24px 24px 20px;
+  }
+  .setup-body.open { display:block; }
+  .setup-step { display:flex; gap:14px; margin-bottom:18px; align-items:flex-start; }
+  .step-num { width:26px; height:26px; background:var(--gold); color:#0a0e1a; border-radius:50%; font-size:0.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .step-text { font-size:0.86rem; color:var(--text); line-height:1.6; }
+  .step-text a { color:var(--gold); }
+  .step-text code { background:var(--surface2); padding:2px 7px; border-radius:4px; font-family:monospace; font-size:0.83em; color:#7dd3fc; word-break:break-all; }
+  .note-box { margin-top:16px; padding:14px 18px; background:rgba(55,189,238,0.07); border:1px solid rgba(55,189,238,0.2); border-radius:8px; font-size:0.82rem; color:#7dd3fc; line-height:1.6; }
+
+  .btn-reset { margin-top:28px; padding:10px 24px; background:transparent; border:1px solid rgba(229,57,53,0.35); border-radius:8px; color:#EF9A9A; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; cursor:pointer; text-transform:uppercase; }
+  .btn-reset:hover { background:rgba(229,57,53,0.08); }
+  .warn-box { padding:12px 16px; background:rgba(229,57,53,0.07); border:1px solid rgba(229,57,53,0.25); border-radius:8px; font-size:0.82rem; color:#EF9A9A; line-height:1.6; margin-bottom:18px; }
+  .warn-box strong { color:#fff; }
+
+  /* PRINT */
   @media print {
-    body { background: #fff !important; color: #000 !important; font-family: Arial, sans-serif; }
-    body::before { display: none; }
-    .no-print { display: none !important; }
-    .print-only { display: block !important; }
-
-    .print-header { text-align: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 3px solid #000; }
-    .print-header h1 { font-size: 2rem; font-weight: 900; letter-spacing: 0.05em; color: #000; margin-bottom: 4px; }
-    .print-header p { font-size: 0.8rem; color: #666; }
-
-    .print-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-
-    .print-entry { border: 2px solid #222; border-radius: 8px; padding: 10px 8px; text-align: center; page-break-inside: avoid; }
-    .print-entry .pe-num { font-size: 0.6rem; color: #999; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; }
-    .print-entry .pe-name { font-size: 1rem; font-weight: 800; border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 6px; }
-    .print-entry .pe-team { font-size: 0.78rem; padding: 3px 0; display: flex; align-items: center; justify-content: center; gap: 5px; }
-    .print-entry .pe-team:not(:last-child) { border-bottom: 1px dashed #e0e0e0; }
-    .print-entry .pe-flag { font-size: 1.3rem; }
-
-    .print-empty { border: 2px dashed #ccc; border-radius: 8px; padding: 10px 8px; text-align: center; }
-    .print-empty .pe-num { font-size: 0.6rem; color: #bbb; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
-    .print-empty .pe-blank { font-size: 0.75rem; color: #ccc; font-style: italic; }
-
-    .print-footer { margin-top: 16px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 0.65rem; color: #aaa; text-align: center; }
+    body { background:#fff !important; color:#000 !important; font-family:Arial,sans-serif; }
+    body::before { display:none; }
+    .no-print { display:none !important; }
+    .print-only { display:block !important; }
+    .print-header { text-align:center; margin-bottom:20px; padding-bottom:14px; border-bottom:3px solid #000; }
+    .print-header h1 { font-size:2rem; font-weight:900; letter-spacing:0.05em; color:#000; margin-bottom:4px; }
+    .print-header p { font-size:0.8rem; color:#666; }
+    .print-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+    .print-entry { border:2px solid #222; border-radius:8px; padding:10px 8px; text-align:center; page-break-inside:avoid; }
+    .print-entry .pe-num { font-size:0.6rem; color:#999; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:3px; }
+    .print-entry .pe-name { font-size:1rem; font-weight:800; border-bottom:1px solid #ddd; padding-bottom:6px; margin-bottom:6px; }
+    .print-entry .pe-team { font-size:0.78rem; padding:3px 0; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .print-entry .pe-team:not(:last-child) { border-bottom:1px dashed #e0e0e0; }
+    .print-entry .pe-flag { font-size:1.3rem; }
+    .print-empty { border:2px dashed #ccc; border-radius:8px; padding:10px 8px; text-align:center; }
+    .print-empty .pe-num { font-size:0.6rem; color:#bbb; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; }
+    .print-empty .pe-blank { font-size:0.75rem; color:#ccc; font-style:italic; }
+    .print-footer { margin-top:16px; border-top:1px solid #ccc; padding-top:10px; font-size:0.65rem; color:#aaa; text-align:center; }
   }
-  .print-only { display: none; }
+  .print-only { display:none; }
 
-  /* Host corner button */
-  .host-corner-btn {
-    position: fixed;
-    top: 14px;
-    right: 16px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 7px 14px;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-  .host-corner-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .host-corner-btn.active { background: rgba(255,215,0,0.12); border-color: var(--gold); color: var(--gold); }
-
-  @media (max-width: 480px) {
-    .team-cards { grid-template-columns: 1fr; }
-    .enter-card { padding: 28px 20px; }
+  @media (max-width:480px) {
+    .team-cards { grid-template-columns:1fr; }
+    .enter-card { padding:28px 20px; }
+    .teams-grid { grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- PRINT WALL (hidden on screen, visible when printing) -->
-  <div class="print-only" id="print-wall">
+  <!-- PRINT WALL -->
+  <div class="print-only">
     <div class="print-header">
       <h1>🏆 World Cup 2026 — Simply Techspace Sweepstake</h1>
       <p id="print-date"></p>
@@ -201,11 +206,10 @@
     <p>Simply Techspace Sweepstake</p>
   </header>
 
-  <!-- Small host button fixed top-right -->
-  <button class="host-corner-btn no-print" onclick="switchTab('host')" id="host-corner-btn" title="Host View">🔐 Host</button>
+  <button class="host-corner-btn no-print" id="host-corner-btn" onclick="switchTab('host')" title="Host View">🔐 Host</button>
 
   <div class="tabs no-print">
-    <button class="tab-btn active" onclick="switchTab('enter')" id="tab-enter">Enter Sweepstake</button>
+    <button class="tab-btn active" id="tab-enter" onclick="switchTab('enter')">Enter Sweepstake</button>
   </div>
 
   <!-- ENTER PANEL -->
@@ -254,6 +258,7 @@
 
   <!-- HOST PANEL -->
   <div class="panel no-print" id="panel-host">
+    <!-- Login -->
     <div id="host-login" class="host-login">
       <h2>🔐 Host Access</h2>
       <p>Enter the host password to view all draws</p>
@@ -265,137 +270,144 @@
       <hr class="divider">
       <p style="font-size:0.8rem;color:var(--muted)">Default password: <strong style="color:var(--gold)">simply2026</strong></p>
     </div>
-    <div id="host-dashboard" class="host-dashboard" style="display:none">
+
+    <!-- Dashboard -->
+    <div id="host-dashboard" style="display:none">
       <h2>Host Dashboard</h2>
       <div id="host-stats" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 8px;"></div>
       <div class="host-actions">
-        <button class="btn-action green-a" onclick="renderHostDashboard()">↻ Refresh</button>
-        <button class="btn-action blue" onclick="printWallChart()">🖨 Print Wall Chart</button>
+        <button class="btn-action grn" onclick="renderHostDashboard()">↻ Refresh</button>
+        <button class="btn-action cyan" onclick="printWallChart()">🖨 Print Wall Chart</button>
       </div>
       <div id="host-warn"></div>
+
+      <!-- ALL TEAMS GRID -->
+      <div class="section-title">All 48 Teams</div>
+      <div class="teams-grid" id="teams-grid"></div>
+
+      <!-- ENTRIES LIST -->
+      <div class="section-title" style="margin-top:36px">Entries</div>
       <div id="entries-wrap"><div class="loading">Loading...</div></div>
-      <div id="unassigned-wrap" class="unassigned-section"></div>
+
       <button class="btn-reset" onclick="resetSweepstake()">⚠ Reset Entire Sweepstake</button>
 
-      <!-- Setup guide — only visible after host login -->
-      <div style="margin-top:40px">
-        <div class="setup-card">
-          <h2>⚙ Setup Guide</h2>
-          <p>This sweepstake needs a free <strong>JSONBin</strong> account so that all entries are saved in the cloud and visible to everyone in real time. Takes about 3 minutes.</p>
-          <div class="setup-step">
-            <div class="step-num">1</div>
-            <div class="step-text">Go to <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> and sign up for a free account.</div>
-          </div>
-          <div class="setup-step">
-            <div class="step-num">2</div>
-            <div class="step-text">Once logged in, click <strong>API Keys</strong> in the top menu. Copy your <strong>Secret Key</strong> — it starts with <code>$2a$10$...</code></div>
-          </div>
-          <div class="setup-step">
-            <div class="step-num">3</div>
-            <div class="step-text">Click <strong>Bins → Create a Bin</strong>. Paste this as the initial content and save:<br><br>
-              <code>{"deck":[],"entries":[]}</code>
-            </div>
-          </div>
-          <div class="setup-step">
-            <div class="step-num">4</div>
-            <div class="step-text">Copy the <strong>Bin ID</strong> shown in the URL (looks like <code>6641f3abc12345</code>).</div>
-          </div>
-          <div class="setup-step">
-            <div class="step-num">5</div>
-            <div class="step-text">Open <code>worldcup_sweepstake.html</code> in a text editor. Near the top of the <code>&lt;script&gt;</code> section, replace:<br><br>
-              <code>const JSONBIN_BIN_ID  = '69fc5f25adc21f119a6708c6';</code><br>
-              <code>const JSONBIN_API_KEY = '$2a$10$HOYszGzByLJGSR6fYmDiYukgVF1zMzV0gDx/B0iCYbutdsSEKLnQW';</code><br><br>
-              …with your actual Bin ID and Secret Key.
-            </div>
-          </div>
-          <div class="setup-step">
-            <div class="step-num">6</div>
-            <div class="step-text">Save the file, commit it to your GitHub repo, and you're live! The first page load will automatically shuffle and initialise the draw.</div>
-          </div>
-          <div class="note-box">
-            💡 <strong>Want to change the host password?</strong> Find <code>const HOST_PASSWORD = 'simply2026';</code> in the script and change it to whatever you like before deploying.
-          </div>
+      <!-- SETUP GUIDE (collapsed) -->
+      <button class="setup-toggle no-print" id="setup-toggle" onclick="toggleSetup()">
+        ⚙ Setup Guide — JSONBin Configuration
+        <span class="arrow">▼</span>
+      </button>
+      <div class="setup-body" id="setup-body">
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-text">Go to <a href="https://jsonbin.io" target="_blank">jsonbin.io</a> and sign up for a free account.</div>
         </div>
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-text">Click <strong>API Keys</strong> in the left menu. Copy your <strong>Secret Key</strong> — starts with <code>$2a$10$...</code></div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div class="step-text">Click <strong>Bins → Create a Bin</strong>. Paste this as the content:<br><br><code>{"deck":[],"entries":[]}</code></div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">4</div>
+          <div class="step-text">Copy the <strong>Bin ID</strong> from the URL (e.g. <code>6641f3abc12345</code>).</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">5</div>
+          <div class="step-text">Open this HTML file in Notepad. Press <strong>Ctrl+H</strong>. Replace <code>YOUR_BIN_ID_HERE</code> with your Bin ID, then replace <code>YOUR_API_KEY_HERE</code> with your Secret Key. Save &amp; re-upload to GitHub.</div>
+        </div>
+        <div class="setup-step">
+          <div class="step-num">6</div>
+          <div class="step-text">The first page load after setup will auto-shuffle all 48 teams and you're live!</div>
+        </div>
+        <div class="note-box">💡 To change the host password, find <code>const HOST_PASSWORD = 'simply2026';</code> in the script before deploying.</div>
       </div>
+
     </div>
   </div>
 
 </div>
-
 <script>
-// ═══════════════════════════════════════════════
-//  CONFIG — replace these before deploying!
-// ═══════════════════════════════════════════════
+// ════════════════════════════════════════════
+//  CONFIG — replace before deploying
+// ════════════════════════════════════════════
 const JSONBIN_BIN_ID  = '69fc5f25adc21f119a6708c6';
 const JSONBIN_API_KEY = '$2a$10$HOYszGzByLJGSR6fYmDiYukgVF1zMzV0gDx/B0iCYbutdsSEKLnQW';
 const HOST_PASSWORD   = 'simply2026';
 const MAX_ENTRIES     = 24;
-// ═══════════════════════════════════════════════
+// ════════════════════════════════════════════
 
 const TEAMS = [
-  { name: "United States",  flag: "🇺🇸", group: "Group A" },
-  { name: "Mexico",         flag: "🇲🇽", group: "Group A" },
-  { name: "Canada",         flag: "🇨🇦", group: "Group A" },
-  { name: "Uruguay",        flag: "🇺🇾", group: "Group A" },
-  { name: "Argentina",      flag: "🇦🇷", group: "Group B" },
-  { name: "Brazil",         flag: "🇧🇷", group: "Group B" },
-  { name: "Colombia",       flag: "🇨🇴", group: "Group B" },
-  { name: "Ecuador",        flag: "🇪🇨", group: "Group B" },
-  { name: "France",         flag: "🇫🇷", group: "Group C" },
-  { name: "England",        flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", group: "Group C" },
-  { name: "Germany",        flag: "🇩🇪", group: "Group C" },
-  { name: "Spain",          flag: "🇪🇸", group: "Group C" },
-  { name: "Portugal",       flag: "🇵🇹", group: "Group D" },
-  { name: "Netherlands",    flag: "🇳🇱", group: "Group D" },
-  { name: "Belgium",        flag: "🇧🇪", group: "Group D" },
-  { name: "Denmark",        flag: "🇩🇰", group: "Group D" },
-  { name: "Japan",          flag: "🇯🇵", group: "Group E" },
-  { name: "South Korea",    flag: "🇰🇷", group: "Group E" },
-  { name: "Australia",      flag: "🇦🇺", group: "Group E" },
-  { name: "Iran",           flag: "🇮🇷", group: "Group E" },
-  { name: "Morocco",        flag: "🇲🇦", group: "Group F" },
-  { name: "Senegal",        flag: "🇸🇳", group: "Group F" },
-  { name: "Nigeria",        flag: "🇳🇬", group: "Group F" },
-  { name: "Egypt",          flag: "🇪🇬", group: "Group F" },
-  { name: "Saudi Arabia",   flag: "🇸🇦", group: "Group G" },
-  { name: "Turkey",         flag: "🇹🇷", group: "Group G" },
-  { name: "Croatia",        flag: "🇭🇷", group: "Group G" },
-  { name: "Serbia",         flag: "🇷🇸", group: "Group G" },
-  { name: "Switzerland",    flag: "🇨🇭", group: "Group H" },
-  { name: "Austria",        flag: "🇦🇹", group: "Group H" },
-  { name: "Scotland",       flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", group: "Group H" },
-  { name: "Poland",         flag: "🇵🇱", group: "Group H" },
-  { name: "Italy",          flag: "🇮🇹", group: "Group I" },
-  { name: "Greece",         flag: "🇬🇷", group: "Group I" },
-  { name: "Hungary",        flag: "🇭🇺", group: "Group I" },
-  { name: "Slovenia",       flag: "🇸🇮", group: "Group I" },
-  { name: "Chile",          flag: "🇨🇱", group: "Group J" },
-  { name: "Peru",           flag: "🇵🇪", group: "Group J" },
-  { name: "Venezuela",      flag: "🇻🇪", group: "Group J" },
-  { name: "Paraguay",       flag: "🇵🇾", group: "Group J" },
-  { name: "Ivory Coast",    flag: "🇨🇮", group: "Group K" },
-  { name: "Ghana",          flag: "🇬🇭", group: "Group K" },
-  { name: "Cameroon",       flag: "🇨🇲", group: "Group K" },
-  { name: "Algeria",        flag: "🇩🇿", group: "Group K" },
-  { name: "South Africa",   flag: "🇿🇦", group: "Group L" },
-  { name: "Qatar",          flag: "🇶🇦", group: "Group L" },
-  { name: "New Zealand",    flag: "🇳🇿", group: "Group L" },
-  { name: "Indonesia",      flag: "🇮🇩", group: "Group L" },
+  {name:"United States", flag:"🇺🇸", group:"Group A"},
+  {name:"Mexico",        flag:"🇲🇽", group:"Group A"},
+  {name:"Canada",        flag:"🇨🇦", group:"Group A"},
+  {name:"Uruguay",       flag:"🇺🇾", group:"Group A"},
+  {name:"Argentina",     flag:"🇦🇷", group:"Group B"},
+  {name:"Brazil",        flag:"🇧🇷", group:"Group B"},
+  {name:"Colombia",      flag:"🇨🇴", group:"Group B"},
+  {name:"Ecuador",       flag:"🇪🇨", group:"Group B"},
+  {name:"France",        flag:"🇫🇷", group:"Group C"},
+  {name:"England",       flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", group:"Group C"},
+  {name:"Germany",       flag:"🇩🇪", group:"Group C"},
+  {name:"Spain",         flag:"🇪🇸", group:"Group C"},
+  {name:"Portugal",      flag:"🇵🇹", group:"Group D"},
+  {name:"Netherlands",   flag:"🇳🇱", group:"Group D"},
+  {name:"Belgium",       flag:"🇧🇪", group:"Group D"},
+  {name:"Denmark",       flag:"🇩🇰", group:"Group D"},
+  {name:"Japan",         flag:"🇯🇵", group:"Group E"},
+  {name:"South Korea",   flag:"🇰🇷", group:"Group E"},
+  {name:"Australia",     flag:"🇦🇺", group:"Group E"},
+  {name:"Iran",          flag:"🇮🇷", group:"Group E"},
+  {name:"Morocco",       flag:"🇲🇦", group:"Group F"},
+  {name:"Senegal",       flag:"🇸🇳", group:"Group F"},
+  {name:"Nigeria",       flag:"🇳🇬", group:"Group F"},
+  {name:"Egypt",         flag:"🇪🇬", group:"Group F"},
+  {name:"Saudi Arabia",  flag:"🇸🇦", group:"Group G"},
+  {name:"Turkey",        flag:"🇹🇷", group:"Group G"},
+  {name:"Croatia",       flag:"🇭🇷", group:"Group G"},
+  {name:"Serbia",        flag:"🇷🇸", group:"Group G"},
+  {name:"Switzerland",   flag:"🇨🇭", group:"Group H"},
+  {name:"Austria",       flag:"🇦🇹", group:"Group H"},
+  {name:"Scotland",      flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", group:"Group H"},
+  {name:"Poland",        flag:"🇵🇱", group:"Group H"},
+  {name:"Italy",         flag:"🇮🇹", group:"Group I"},
+  {name:"Greece",        flag:"🇬🇷", group:"Group I"},
+  {name:"Hungary",       flag:"🇭🇺", group:"Group I"},
+  {name:"Slovenia",      flag:"🇸🇮", group:"Group I"},
+  {name:"Chile",         flag:"🇨🇱", group:"Group J"},
+  {name:"Peru",          flag:"🇵🇪", group:"Group J"},
+  {name:"Venezuela",     flag:"🇻🇪", group:"Group J"},
+  {name:"Paraguay",      flag:"🇵🇾", group:"Group J"},
+  {name:"Ivory Coast",   flag:"🇨🇮", group:"Group K"},
+  {name:"Ghana",         flag:"🇬🇭", group:"Group K"},
+  {name:"Cameroon",      flag:"🇨🇲", group:"Group K"},
+  {name:"Algeria",       flag:"🇩🇿", group:"Group K"},
+  {name:"South Africa",  flag:"🇿🇦", group:"Group L"},
+  {name:"Qatar",         flag:"🇶🇦", group:"Group L"},
+  {name:"New Zealand",   flag:"🇳🇿", group:"Group L"},
+  {name:"Indonesia",     flag:"🇮🇩", group:"Group L"},
 ];
 
 let appState = null;
 
 function isSetup() {
-  return JSONBIN_BIN_ID !== '69fc5f25adc21f119a6708c6' && JSONBIN_API_KEY !== '$2a$10$HOYszGzByLJGSR6fYmDiYukgVF1zMzV0gDx/B0iCYbutdsSEKLnQW';
+  return JSONBIN_BIN_ID !== 'YOUR_BIN_ID_HERE' && JSONBIN_API_KEY !== 'YOUR_API_KEY_HERE';
 }
 
 async function loadState() {
   try {
     const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-      headers: { 'X-Master-Key': JSONBIN_API_KEY, 'X-Bin-Meta': 'false' }
+      headers: {
+        'X-Master-Key': JSONBIN_API_KEY,
+        'X-Access-Key': JSONBIN_API_KEY,
+        'X-Bin-Meta': 'false'
+      }
     });
-    if (!r.ok) throw new Error('Fetch failed ' + r.status);
-    return await r.json();
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    // JSONBin v3 wraps in {record:...} unless X-Bin-Meta:false
+    return data.record ? data.record : data;
   } catch(e) { console.error('Load error:', e); return null; }
 }
 
@@ -403,10 +415,14 @@ async function saveState(state) {
   try {
     const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_API_KEY },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_API_KEY,
+        'X-Access-Key': JSONBIN_API_KEY
+      },
       body: JSON.stringify(state)
     });
-    if (!r.ok) throw new Error('Save failed ' + r.status);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
   } catch(e) { console.error('Save error:', e); }
 }
 
@@ -415,18 +431,20 @@ function freshState() {
   return { deck: shuffled.map(t => t.name), entries: [] };
 }
 
+// ── INIT ──
 async function init() {
   if (!isSetup()) {
     document.getElementById('enter-loading').style.display = 'none';
     document.getElementById('enter-main').style.display = 'block';
-    document.getElementById('enter-error').textContent = '⚠ Not configured yet — see the Setup Guide tab.';
+    document.getElementById('enter-error').textContent = '⚠ Not configured yet — host must complete setup first.';
     document.getElementById('draw-btn').disabled = true;
     document.getElementById('slots-count').textContent = '24';
     return;
   }
 
   appState = await loadState();
-  if (!appState || !Array.isArray(appState.deck) || (appState.deck.length === 0 && (!appState.entries || appState.entries.length === 0))) {
+  // Initialise if blank or empty
+  if (!appState || !Array.isArray(appState.deck) || (appState.deck.length === 0 && (appState.entries||[]).length === 0)) {
     appState = freshState();
     await saveState(appState);
   }
@@ -436,15 +454,17 @@ async function init() {
 function renderEnterPanel() {
   document.getElementById('enter-loading').style.display = 'none';
   document.getElementById('enter-main').style.display = 'block';
-  const used = (appState.entries || []).length;
-  const slots = MAX_ENTRIES - used;
+  const slots = MAX_ENTRIES - (appState.entries||[]).length;
   document.getElementById('slots-count').textContent = slots;
+  const btn = document.getElementById('draw-btn');
+  btn.disabled = false;
   if (slots <= 0) {
-    document.getElementById('draw-btn').disabled = true;
+    btn.disabled = true;
     document.getElementById('enter-error').textContent = 'The sweepstake is full!';
   }
 }
 
+// ── DRAW ──
 async function drawTeams() {
   const name = document.getElementById('name-input').value.trim();
   const errEl = document.getElementById('enter-error');
@@ -455,24 +475,21 @@ async function drawTeams() {
   btn.disabled = true;
   btn.textContent = 'Drawing...';
 
-  // Always get latest before writing
   const latest = await loadState();
   if (latest) appState = latest;
 
-  const already = (appState.entries || []).find(e => e.name.toLowerCase() === name.toLowerCase());
+  const already = (appState.entries||[]).find(e => e.name.toLowerCase() === name.toLowerCase());
   if (already) {
     errEl.textContent = "You've already entered! Here are your teams:";
     showReveal(name, already.teams);
     btn.disabled = false; btn.textContent = 'Draw My Teams';
     return;
   }
-
-  if ((appState.entries || []).length >= MAX_ENTRIES) {
+  if ((appState.entries||[]).length >= MAX_ENTRIES) {
     errEl.textContent = 'Sorry — the sweepstake is full!';
     btn.disabled = false; btn.textContent = 'Draw My Teams';
     return;
   }
-
   if (!appState.deck || appState.deck.length < 2) {
     errEl.textContent = 'Not enough teams left!';
     btn.disabled = false; btn.textContent = 'Draw My Teams';
@@ -481,11 +498,11 @@ async function drawTeams() {
 
   const t1n = appState.deck.shift();
   const t2n = appState.deck.shift();
-  const t1 = TEAMS.find(t => t.name === t1n) || { name: t1n, flag: '🏳', group: '—' };
-  const t2 = TEAMS.find(t => t.name === t2n) || { name: t2n, flag: '🏳', group: '—' };
+  const t1 = TEAMS.find(t => t.name === t1n) || {name:t1n, flag:'🏳', group:'—'};
+  const t2 = TEAMS.find(t => t.name === t2n) || {name:t2n, flag:'🏳', group:'—'};
 
   if (!appState.entries) appState.entries = [];
-  appState.entries.push({ name, teams: [t1, t2], ts: Date.now() });
+  appState.entries.push({name, teams:[t1,t2], ts:Date.now()});
   await saveState(appState);
 
   renderEnterPanel();
@@ -499,18 +516,19 @@ function showReveal(name, teams) {
   document.getElementById('reveal-name').textContent = name;
   for (let i = 1; i <= 2; i++) {
     const t = teams[i-1];
-    document.getElementById('flag-' + i).textContent = t.flag;
-    document.getElementById('tname-' + i).textContent = t.name;
-    document.getElementById('tbadge-' + i).textContent = t.group;
+    document.getElementById('flag-'+i).textContent = t.flag;
+    document.getElementById('tname-'+i).textContent = t.name;
+    document.getElementById('tbadge-'+i).textContent = t.group;
   }
 }
 
 function revealCard(n) {
-  document.getElementById('scratch-' + n).classList.add('gone');
-  document.getElementById('card-' + n).classList.remove('hidden-card');
-  document.getElementById('card-' + n).classList.add('revealed');
+  document.getElementById('scratch-'+n).classList.add('gone');
+  document.getElementById('card-'+n).classList.remove('hidden-card');
+  document.getElementById('card-'+n).classList.add('revealed');
 }
 
+// ── HOST ──
 function hostLogin() {
   if (document.getElementById('host-password').value === HOST_PASSWORD) {
     document.getElementById('host-login').style.display = 'none';
@@ -522,95 +540,106 @@ function hostLogin() {
 }
 
 async function renderHostDashboard() {
-  document.getElementById('entries-wrap').innerHTML = '<div class="loading">Refreshing...</div>';
+  document.getElementById('entries-wrap').innerHTML = '<div class="loading">Loading...</div>';
   document.getElementById('host-warn').innerHTML = '';
 
   if (!isSetup()) {
-    document.getElementById('host-warn').innerHTML = `<div class="warn-box"><strong>⚠ JSONBin not configured.</strong> Entries won't save across devices. Follow the Setup Guide tab to fix this.</div>`;
+    document.getElementById('host-warn').innerHTML = `<div class="warn-box"><strong>⚠ JSONBin not configured yet.</strong> Open the Setup Guide below to get started.</div>`;
   } else {
     const latest = await loadState();
     if (latest) appState = latest;
+    if (!appState) appState = freshState();
   }
 
-  const entries = appState ? (appState.entries || []) : [];
-  const deck = appState ? (appState.deck || []) : [];
+  const entries = appState ? (appState.entries||[]) : [];
+  const deck    = appState ? (appState.deck||[]) : [];
   const remaining = MAX_ENTRIES - entries.length;
 
   document.getElementById('host-stats').innerHTML = `
     <span class="stat-chip green">✅ ${entries.length} entered</span>
     <span class="stat-chip gold">⏳ ${remaining} slots left</span>
-    <span class="stat-chip red">🎲 ${deck.length} teams in deck</span>`;
+    <span class="stat-chip blue">🎲 ${deck.length} teams in deck</span>`;
 
+  // ── TEAMS GRID ──
+  // Build a lookup: teamName → ownerName
+  const ownerMap = {};
+  entries.forEach(e => e.teams.forEach(t => { ownerMap[t.name] = e.name; }));
+
+  const gridHtml = TEAMS.map(t => {
+    const owner = ownerMap[t.name];
+    const assigned = !!owner;
+    return `<div class="tg-card ${assigned ? 'assigned' : 'unassigned'}">
+      <div class="tg-flag">${t.flag}</div>
+      <div class="tg-name">${t.name}</div>
+      <div class="tg-group">${t.group}</div>
+      <div class="tg-owner">${assigned ? owner : 'available'}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('teams-grid').innerHTML = gridHtml;
+
+  // ── ENTRIES LIST ──
   if (entries.length === 0) {
     document.getElementById('entries-wrap').innerHTML = '<p style="color:var(--muted);font-size:0.9rem;padding:8px 0">No entries yet.</p>';
   } else {
     const rows = entries.map((e, i) => {
-      const pills = e.teams.map(t => `<span class="team-pill">${t.flag} ${t.name}</span>`).join('');
-      return `<tr class="entry-row"><td>#${i+1}&nbsp;&nbsp;${e.name}</td><td>${pills}</td></tr>`;
+      const pills = e.teams.map(t => `<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:var(--surface2);border-radius:20px;font-size:0.82rem;margin:2px">${t.flag} ${t.name}</span>`).join('');
+      return `<tr>
+        <td style="background:var(--surface);padding:12px 14px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);border-left:1px solid var(--border);border-radius:10px 0 0 10px;font-weight:600;white-space:nowrap">#${i+1}&nbsp;&nbsp;${e.name}</td>
+        <td style="background:var(--surface);padding:12px 14px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);border-right:1px solid var(--border);border-radius:0 10px 10px 0">${pills}</td>
+      </tr>`;
     }).join('');
     document.getElementById('entries-wrap').innerHTML = `
-      <table class="entries-table">
-        <thead><tr><th>Name</th><th>Teams</th></tr></thead>
+      <table style="width:100%;border-collapse:separate;border-spacing:0 6px">
+        <thead><tr>
+          <th style="text-align:left;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:0 14px 6px">Name</th>
+          <th style="text-align:left;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:0 14px 6px">Teams</th>
+        </tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
-  }
-
-  if (deck.length > 0) {
-    const pills = deck.map(tn => {
-      const t = TEAMS.find(x => x.name === tn) || { flag: '🏳', name: tn };
-      return `<span class="team-pill">${t.flag} ${t.name}</span>`;
-    }).join('');
-    document.getElementById('unassigned-wrap').innerHTML = `<h3>Teams Still In The Pot</h3><div class="team-grid">${pills}</div>`;
-  } else {
-    document.getElementById('unassigned-wrap').innerHTML = `<h3 style="color:var(--green)">All teams have been drawn! 🎉</h3>`;
   }
 }
 
 async function resetSweepstake() {
-  if (!confirm('Reset everything? All entries will be deleted and teams re-shuffled. Cannot be undone.')) return;
+  if (!confirm('Reset everything? All entries deleted and teams re-shuffled. Cannot be undone.')) return;
   appState = freshState();
   await saveState(appState);
   renderEnterPanel();
   renderHostDashboard();
 }
 
-function printWallChart() {
-  const entries = appState ? (appState.entries || []) : [];
-  document.getElementById('print-date').textContent =
-    'Printed: ' + new Date().toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+// ── SETUP TOGGLE ──
+function toggleSetup() {
+  const btn = document.getElementById('setup-toggle');
+  const body = document.getElementById('setup-body');
+  btn.classList.toggle('open');
+  body.classList.toggle('open');
+}
 
+// ── PRINT ──
+function printWallChart() {
+  const entries = appState ? (appState.entries||[]) : [];
+  document.getElementById('print-date').textContent =
+    'Printed: ' + new Date().toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   let html = '';
   for (let i = 0; i < MAX_ENTRIES; i++) {
     if (i < entries.length) {
       const e = entries[i];
-      const teamsHtml = e.teams.map(t =>
-        `<div class="pe-team"><span class="pe-flag">${t.flag}</span><span>${t.name}</span></div>`
-      ).join('');
-      html += `<div class="print-entry">
-        <div class="pe-num">Entry #${i+1}</div>
-        <div class="pe-name">${e.name}</div>
-        ${teamsHtml}
-      </div>`;
+      const thtml = e.teams.map(t => `<div class="pe-team"><span class="pe-flag">${t.flag}</span><span>${t.name}</span></div>`).join('');
+      html += `<div class="print-entry"><div class="pe-num">Entry #${i+1}</div><div class="pe-name">${e.name}</div>${thtml}</div>`;
     } else {
-      html += `<div class="print-empty">
-        <div class="pe-num">Entry #${i+1}</div>
-        <div class="pe-blank">— not yet entered —</div>
-      </div>`;
+      html += `<div class="print-empty"><div class="pe-num">Entry #${i+1}</div><div class="pe-blank">— not yet entered —</div></div>`;
     }
   }
   document.getElementById('print-grid').innerHTML = html;
   window.print();
 }
 
+// ── TABS ──
 function switchTab(tab) {
-  // Update enter tab button
   document.getElementById('tab-enter').classList.toggle('active', tab === 'enter');
-  // Update corner host button highlight
   document.getElementById('host-corner-btn').classList.toggle('active', tab === 'host');
-  // Show/hide panels
-  ['enter','host'].forEach(t => {
-    document.getElementById('panel-' + t).classList.toggle('active', t === tab);
-  });
+  document.getElementById('panel-enter').classList.toggle('active', tab === 'enter');
+  document.getElementById('panel-host').classList.toggle('active', tab === 'host');
 }
 
 init();
